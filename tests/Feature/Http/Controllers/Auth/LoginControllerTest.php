@@ -11,13 +11,15 @@ use Tests\TestCase;
 class LoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
+
+    protected const LOGIN_ENDPOINT = 'login';
     /**
      *
      * @return void
      */
     public function test_muestra_los_inputs_en_la_vista_login()
     {
-        $this->get('/login')
+        $this->get(self::LOGIN_ENDPOINT)
         ->assertSee('Correo')
         ->assertSee('Clave')
         ->assertSee('Ingresar')
@@ -30,7 +32,20 @@ class LoginControllerTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
-        ->get('login')
+        ->get(self::LOGIN_ENDPOINT)
         ->assertStatus(Response::HTTP_FOUND);
+    }
+
+    public function test_puede_iniciar_sesion()
+    {
+        $user = User::factory()->create();
+        $data = [
+            'email' => $user->email,
+            'password' => 'password'
+        ];
+
+        $this->json('POST',self::LOGIN_ENDPOINT, $data)
+        ->assertStatus(Response::HTTP_OK);
+
     }
 }
