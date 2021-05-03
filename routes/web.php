@@ -18,11 +18,10 @@ Route::get('/', function () {
     return view('web.welcome');
 })->name('welcome');
 
-
 Auth::routes([
     'login' => true,
     'register' => false,
     'reset' =>false,
     'verifiy' => false,
-    'confirm' => false
+    'confirm' => false,
     ]);

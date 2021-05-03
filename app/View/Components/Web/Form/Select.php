@@ -9,6 +9,7 @@ class Select extends Component
     public $class;
     public $name;
     public $id;
+
     /**
      * Create a new component instance.
      *
@@ -18,8 +19,7 @@ class Select extends Component
         $class = 'w-full mb-2 px-1 py-2 border border-gray-400 placeholder-gray-800 rounded-md',
         $name = '',
         $id = ''
-    )
-    {
+    ) {
         $this->class = $class;
         $this->name = $name;
         $this->id = $id;

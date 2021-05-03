@@ -9,9 +9,9 @@ class LoginUseCase
 {
     public function execute(LoginDto $userLoginDto)
     {
-        if (Auth::attempt(['email' => $userLoginDto->email,'password' => $userLoginDto->password])) {
+        if (Auth::attempt(['email' => $userLoginDto->email, 'password' => $userLoginDto->password])) {
             return response()->json([
-                'message' => 'Bienvenido(a) ' . Auth::user()->name,
+                'message' => 'Bienvenido(a) '.Auth::user()->name,
                 'redirect' => route('welcome'),
             ], 200);
         }

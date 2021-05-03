@@ -9,12 +9,13 @@ class Tiny extends Component
     public $name;
     public $label;
     public $value;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name = '', $label = '', $value= '')
+    public function __construct($name = '', $label = '', $value = '')
     {
         $this->name = $name;
         $this->label = $label;

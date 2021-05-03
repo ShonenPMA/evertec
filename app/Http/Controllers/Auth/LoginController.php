@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
@@ -53,7 +54,6 @@ class LoginController extends Controller
     {
         return view('web.auth.login');
     }
-
 
     /**
      * Handle a login request to the application.

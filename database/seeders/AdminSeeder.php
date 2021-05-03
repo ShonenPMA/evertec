@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin',
             'role' => 'admin',
-            'email' => 'admin@evertec.com'
+            'email' => 'admin@evertec.com',
         ]);
     }
 }
