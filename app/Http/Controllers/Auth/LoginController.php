@@ -1,10 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Dtos\Auth\LoginDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Authentication\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\UseCases\Auth\LoginUseCase;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
@@ -36,5 +42,32 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm() : View
+    {
+        return view('web.auth.login');
+    }
+
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \App\Http\Requests\Authentication\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(LoginRequest $request) : JsonResponse
+    {
+        $dto = LoginDto::fromRequest($request);
+        $useCase = new LoginUseCase();
+
+        return $useCase->execute($dto);
     }
 }
