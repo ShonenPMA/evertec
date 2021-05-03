@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
@@ -54,12 +55,11 @@ class LoginController extends Controller
         return view('web.auth.login');
     }
 
-
     /**
      * Handle a login request to the application.
      *
      * @param  \App\Http\Requests\Authentication\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */

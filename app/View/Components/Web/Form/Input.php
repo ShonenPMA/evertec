@@ -14,6 +14,7 @@ class Input extends Component
     public $autofocus;
     public $id;
     public $value;
+
     /**
      * Create a new component instance.
      *
@@ -27,9 +28,8 @@ class Input extends Component
         $required = false,
         $autofocus = false,
         $id = '',
-        $value=''
-    )
-    {
+        $value = ''
+    ) {
         $this->class = $class;
         $this->type = $type;
         $this->name = $name;
