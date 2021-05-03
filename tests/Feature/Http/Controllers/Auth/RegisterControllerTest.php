@@ -17,7 +17,7 @@ class RegisterControllerTest extends TestCase
     /**
      * @return void
      */
-    public function test_muestra_los_inputs_en_la_vista_login()
+    public function test_muestra_los_inputs_en_la_vista_registro()
     {
         $this->get(self::REGISTER_ENDPOINT)
         ->assertSee('Correo')
