@@ -20,6 +20,8 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
+        "nunomaduro/larastan": "^0.7.5",
+        "phpstan/phpstan": "^0.12.85",
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
@@ -46,7 +48,8 @@
             "@php artisan key:generate --ansi"
         ],
         "check-styles" : "vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation --verbose --show-progress=estimating",
-        "apply-styles" : "vendor/bin/php-cs-fixer fix --stop-on-violation --verbose --show-progress=estimating"
+        "apply-styles" : "vendor/bin/php-cs-fixer fix --stop-on-violation --verbose --show-progress=estimating",
+        "analyse" : "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G"
     },
     "extra": {
         "laravel": {
