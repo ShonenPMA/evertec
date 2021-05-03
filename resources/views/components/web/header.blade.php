@@ -9,5 +9,14 @@
             <a class="mr-2 border-white border-2 rounded-md p-2" href="">Registrarme</a>
             <a class="mr-2 border-white bg-white border-2 rounded-md p-2 text-gray-800" href="{{ route('login') }}">Iniciar sesión</a>
         @endguest
+
+        @auth
+            <a 
+                class="mr-2 border-white border-2 rounded-md p-2" 
+                onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                href="">Cerrar Sesión</a>
+            <form id="logout-form" action="{{ route('logout')}}" method="POST" style="display: none;">@csrf</form>
+            
+        @endauth
     </div>
 </header>
