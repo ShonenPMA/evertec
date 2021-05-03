@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Tests\Feature\Http\Requests\Authentication;
 
 use App\Http\Requests\Authentication\LoginRequest;
@@ -25,10 +27,11 @@ class LoginRequestTest extends TestCase
     public function requestProvider() : array
     {
         $faker = Factory::create(Factory::DEFAULT_LOCALE);
-        $data =  [
+        $data = [
             'email' =>  $faker->safeEmail,
-            'password' => $faker->password(8)
+            'password' => $faker->password(8),
         ];
+
         return [
             'la petición debe fallar cuando falta el email' => [
                  'shouldPass' => false,
@@ -36,21 +39,22 @@ class LoginRequestTest extends TestCase
             ],
             'la petición debe fallar cuando falta el correo' => [
                  'shouldPass' => false,
-                 'data' => array_merge($data, ['password' => ''])
+                 'data' => array_merge($data, ['password' => '']),
 
             ],
             'la petición debe fallar cuando el correo no tiene el formato correcto' => [
                  'shouldPass' => false,
-                 'data' => array_merge($data, ['email' => $faker->text])
+                 'data' => array_merge($data, ['email' => $faker->text]),
 
             ],
             'la petición debe ser exitosa en el resto de los casos' => [
                  'shouldPass' => true,
-                 'data' => $data
+                 'data' => $data,
 
             ],
         ];
     }
+
     /**
      * @dataProvider requestProvider
      */
