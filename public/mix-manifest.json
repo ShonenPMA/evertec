@@ -1,5 +1,6 @@
 {
-    "/js/swal.js": "/js/swal.js",
     "/js/httpWeb.js": "/js/httpWeb.js",
+    "/js/swal.js": "/js/swal.js",
+    "/js/tinyMCE.js": "/js/tinyMCE.js",
     "/css/app.css": "/css/app.css"
 }
