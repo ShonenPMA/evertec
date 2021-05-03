@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('web.welcome');
 })->name('welcome');
+
+
+Auth::routes([
+    'login' => true,
+    'register' => false,
+    'reset' =>false,
+    'verifiy' => false,
+    'confirm' => false
+    ]);
