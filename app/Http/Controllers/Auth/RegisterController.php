@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Dtos\Auth\RegisterDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Authentication\RegisterRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\UseCases\Auth\RegisterUseCase;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -79,5 +83,19 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         return view('web.auth.register');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \App\Http\Requests\Authentication\RegisterRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(RegisterRequest $request) : JsonResponse
+    {
+        $dto = RegisterDto::fromRequest($request);
+        $useCase = new RegisterUseCase();
+
+        return $useCase->execute($dto);
     }
 }
