@@ -7,7 +7,7 @@
     <div class="w-2/3 flex justify-end">
         @guest
             <a class="mr-2 border-white border-2 rounded-md p-2" href="">Registrarme</a>
-            <a class="mr-2 border-white bg-white border-2 rounded-md p-2 text-gray-800" href="">Iniciar sesión</a>
+            <a class="mr-2 border-white bg-white border-2 rounded-md p-2 text-gray-800" href="{{ route('login') }}">Iniciar sesión</a>
         @endguest
     </div>
 </header>
