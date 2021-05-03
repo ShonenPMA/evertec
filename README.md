@@ -29,19 +29,20 @@ Prueba Técnica
 
 > php artisan key:generate
 
-6. Ejecutar migraciones
+6. Ejecutar migraciones y seeders
 
 > php artisan migrate
-
+> php artisan db:seed
 7. Asignar permisos a las carpetas bootstrap/cache y storage
 
 > chmod -R 775 boostrap/cache
 >
 > chmod -R 775 storage
 
-8. Generar los assets
+8. Generar los assets y copiar los skins del tinymce
 
 > npm install && npm run production
+> sudo cp -r node_modules/tinymce/skins public/js/skins/
 
 9. Configurar en public_html el acceso a tu app (Opcional según donde se haga el deploy)
 
