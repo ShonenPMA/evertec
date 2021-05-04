@@ -25,13 +25,14 @@ class ProductFactory extends Factory
         $faker = \Faker\Factory::create();
         \Bezhanov\Faker\ProviderCollectionHelper::addAllProvidersTo($faker);
         $name = $faker->unique()->productName;
+
         return [
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => $faker->text(),
             'abstract' => $faker->text(50),
-            'price' => $faker->numberBetween(300,1000),
-            'discount' => $faker->numberBetween(0,80) / 100
+            'price' => $faker->numberBetween(300, 1000),
+            'discount' => $faker->numberBetween(0, 80) / 100,
         ];
     }
 }
