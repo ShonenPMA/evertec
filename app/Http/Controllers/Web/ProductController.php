@@ -112,4 +112,16 @@ class ProductController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Show a preview of the product
+     * 
+     * @param  \App\Models\Product 
+     * @return  \Illuminate\View\View
+     */ 
+    public function preview(Product $product)
+    {
+        return view('web.order.preview')
+        ->with('product', $product);
+    }
 }

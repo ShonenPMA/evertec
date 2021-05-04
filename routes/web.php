@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\IndexController;
+use App\Http\Controllers\Web\OrderController;
 use App\Http\Controllers\Web\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [IndexController::class, 'view'])->name('welcome');
+Route::get('/item/{product:slug}',[ProductController::class, 'preview'])->name('order.preview');
 
 Route::middleware(['auth'])->group(function () {
 
