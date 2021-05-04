@@ -1,13 +1,10 @@
 @extends('layouts.web')
 
 @section('content')
-<div class="min-h-screen {{ count($products) == 0 ? 'flex items-center justify-center ' : '' }}">
-    @if (count($products) > 0)
-    <div class="flex flex-wrap justify-evenly mx-auto container">
-        @foreach ($products as $product)
-            <div class="max-w-md my-4 shadow-md  transition-all duration-300 hover:text-white hover:bg-gray-500">
+<div class="min-h-screen">
+            <div class="container mx-auto my-4 shadow-md ">
                 <picture>
-                    <img src="{{$product->image}}" alt="{{ $product->slug }}">
+                    <img class="max-w-4xl mx-auto block my-4" src="{{$product->image}}" alt="{{ $product->slug }}">
                 </picture>
                 <div>
                     <h2 class="mt-2 text-2xl text-center font-semibold tracking-widest">{{ $product->name }}</h2>
@@ -17,15 +14,13 @@
                             <span class="font-bold text-gray-800 ml-4">{{ $product->real_discount }}</span>                         
                         @endif
                     </div>
-                    <p class="p-4 mb-4">{!! $product->abstract !!}</p>
+                    <p class="p-4 mb-4">{!! $product->description !!}</p>
                     <div class="flex justify-center">
-                        <a class="text-center font-semibold mx-auto py-2 px-4 my-4 bg-gray-900 text-white transition-all duration-300 hover:bg-white hover:text-gray-900" href="{{ route('order.preview', $product) }}">Ver Detalle</a>
+                        <a class="text-center font-semibold mx-auto py-2 px-4 my-4 bg-gray-900 text-white transition-all duration-300 hover:bg-gray-400 hover:text-gray-900" href="">Comprar</a>
                     </div>
                 </div>
             </div>
-        @endforeach
     </div>
-        
-    @endif
+
 </div>
 @endsection
