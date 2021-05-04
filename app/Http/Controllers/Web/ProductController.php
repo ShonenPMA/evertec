@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\UseCases\Product\CreateUseCase;
 use App\UseCases\Product\UpdateUseCase;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -103,10 +104,12 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product) : RedirectResponse
     {
-        //
+        $product->delete();
+
+        return redirect()->back();
     }
 }
