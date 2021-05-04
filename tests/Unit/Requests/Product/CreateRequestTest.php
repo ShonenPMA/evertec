@@ -102,7 +102,6 @@ class CreateRequestTest extends TestCase
 
         $faker = Factory::create(Factory::DEFAULT_LOCALE);
 
-
         $name = $faker->name;
         $data = [
             'name' => $name,

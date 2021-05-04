@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
+use Mews\Purifier\Facades\Purifier;
 use Tests\TestCase;
 
 class ProductControllerTest extends TestCase
@@ -91,5 +93,43 @@ class ProductControllerTest extends TestCase
         ->assertSee('Crear producto')
 
         ->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_registar_producto()
+    {
+        $user = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        $name = $this->faker->name;
+
+        $data = [
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'description' => $this->faker->text(),
+            'abstract' => $this->faker->text(50),
+            'price' => $this->faker->numberBetween(300, 1000),
+            'discount' => $this->faker->numberBetween(0, 80),
+        ];
+
+        $this->actingAs($user)
+            ->json('POST', self::PRODUCT_STORE_ENDPOINT, $data)
+            ->assertJsonFragment([
+                'name' => $data['name'],
+                'slug' => $data['slug'],
+                'description' => Purifier::clean($data['description']),
+                'abstract' => Purifier::clean($data['abstract']),
+                'price' => $data['price'],
+                'discount' => $data['discount'] / 100,
+            ]);
+
+        $this->assertDatabaseHas('products', [
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+            'description' => Purifier::clean($data['description']),
+            'abstract' => Purifier::clean($data['abstract']),
+            'price' => $data['price'],
+            'discount' => $data['discount'] / 100,
+        ]);
     }
 }

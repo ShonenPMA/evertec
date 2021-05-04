@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
+use App\Dtos\Product\CreateDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\CreateRequest;
 use App\Http\Resources\ProductCollection;
 use App\Models\Product;
+use App\UseCases\Product\CreateUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -50,12 +53,15 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Product\CreateRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request) : JsonResponse
     {
-        //
+        $dto = CreateDto::fromRequest($request);
+        $useCase = new CreateUseCase(new Product());
+
+        return $useCase->execute($dto);
     }
 
     /**
