@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "sweetalert2": "^10.16.7",
+        "tabulator-tables": "^4.9.3",
         "tinymce": "^5.7.1",
         "tinymce-langs": "^1.0.0"
     }

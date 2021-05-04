@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('web.welcome');
 })->name('welcome');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('product/list', [ProductController::class, 'list']);
+    Route::resource('product', ProductController::class)->except(['show', 'destroy']);
+    Route::get('product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+});
 
 Auth::routes([
     'login' => true,

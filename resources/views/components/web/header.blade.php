@@ -11,6 +11,12 @@
         @endguest
 
         @auth
+        <a  
+            class="mr-2 border-white border-2 rounded-md p-2" 
+            href="{{ route('product.index') }}">
+            Productos
+        </a>
+
             <a 
                 class="mr-2 border-white border-2 rounded-md p-2" 
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
