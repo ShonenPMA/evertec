@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\IndexController;
 use App\Http\Controllers\Web\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('web.welcome');
-})->name('welcome');
+Route::get('/', [IndexController::class, 'view'])->name('welcome');
 
 Route::middleware(['auth'])->group(function () {
 
