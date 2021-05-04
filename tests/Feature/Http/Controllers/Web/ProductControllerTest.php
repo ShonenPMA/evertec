@@ -17,14 +17,45 @@ class ProductControllerTest extends TestCase
     protected const PRODUCT_CREATE_ENDPOINT = 'product/create';
     protected const PRODUCT_STORE_ENDPOINT = 'product';
     protected const PRODUCT_UPDATE_ENDPOINT = 'product/';
+    protected const PRODUCT_EDIT_ENDPOINT = 'product/{product}/edit';
 
     use RefreshDatabase, WithFaker;
 
+    public function endpointsProvider()
+    {
+        return [
+            'listado de productos' => ['GET', self::PRODUCT_INDEX_ENDPOINT],
+            'formulario de creación de productos' => ['GET',self::PRODUCT_CREATE_ENDPOINT],
+            'formulario de edición de productos' => ['EDIT',self::PRODUCT_EDIT_ENDPOINT],
+            'crear productos' => ['POST', self::PRODUCT_STORE_ENDPOINT],
+            'actualizar productos' => ['PUT', self::PRODUCT_UPDATE_ENDPOINT],
+        ];
+    }
+    
     /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+        * @dataProvider endpointsProvider
+    */
+    public function test_obtener_forbidden_si_el_usuario_no_es_admin($method, $endpoint)
+    {
+        $user = User::factory()->create();
+        if($method == 'PUT')
+        {
+            $product = Product::factory()->create();
+            $endpoint .= $product->slug;
+        }
+
+        if($method == 'EDIT')
+        {
+            $product = Product::factory()->create();
+            $method = 'GET';
+            $endpoint  = str_replace("{product}", $product->slug, $endpoint);
+        }
+        $this->actingAs($user)
+        ->json($method, $endpoint)
+        ->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+
     public function test_mostrar_vista_de_listado_de_productos()
     {
         $user = User::factory()->create([
