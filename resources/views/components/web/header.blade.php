@@ -11,11 +11,14 @@
         @endguest
 
         @auth
-        <a  
-            class="mr-2 border-white border-2 rounded-md p-2" 
-            href="{{ route('product.index') }}">
-            Productos
-        </a>
+            @can('list-products')
+            <a  
+                class="mr-2 border-white border-2 rounded-md p-2" 
+                href="{{ route('product.index') }}">
+                Productos
+            </a>
+            @endcan
+        
 
             <a 
                 class="mr-2 border-white border-2 rounded-md p-2" 

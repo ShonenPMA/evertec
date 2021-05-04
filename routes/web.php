@@ -20,9 +20,13 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('product/list', [ProductController::class, 'list']);
-    Route::resource('product', ProductController::class)->except(['show', 'destroy']);
-    Route::get('product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+    Route::middleware(['can:list-products'])->group(function () {
+        Route::get('product/list', [ProductController::class, 'list']);
+        Route::resource('product', ProductController::class)->except(['show', 'destroy']);
+        Route::get('product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+    });
+    
 });
 
 Auth::routes([
