@@ -121,7 +121,7 @@ class ProductController extends Controller
      */ 
     public function preview(Product $product)
     {
-        return view('web.order.preview')
+        return view('web.product.preview')
         ->with('product', $product);
     }
 }

@@ -33,13 +33,28 @@ class Product extends Model
 
     public function getRealPriceAttribute()
     {
-        return 'S/. '.number_format($this->price) .'.00';
+        return 'S/. '.number_format($this->price, 2);
 
     }
 
     public function getRealDiscountAttribute()
     {
-        return 'S/. '.number_format((1-$this->discount)*$this->price) .'.00';
+        return 'S/. '. $this->raw_discount ;
 
+    }
+
+    public function getRawDiscountAttribute()
+    {
+        number_format((1-$this->discount)*$this->price, 2);
+    }
+
+    public function getTotalPriceAttribute()
+    {
+        return $this->discount > 0 ? $this->real_discount : $this->real_price; 
+    }
+
+    public function getRawPriceAttribute()
+    {
+        return $this->discount > 0 ? $this->raw_discount : $this->price; 
     }
 }

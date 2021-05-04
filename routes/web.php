@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [IndexController::class, 'view'])->name('welcome');
-Route::get('/item/{product:slug}',[ProductController::class, 'preview'])->name('order.preview');
+Route::get('/item/{product:slug}',[ProductController::class, 'preview'])->name('product.preview');
+Route::get('/order/{product:slug}', [OrderController::class , 'preview'])->name('order.preview');
 
 Route::middleware(['auth'])->group(function () {
 
