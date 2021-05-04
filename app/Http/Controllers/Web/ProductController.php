@@ -34,11 +34,17 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return  \Illuminate\View\View
      */
-    public function create()
+    public function create() : View
     {
-        //
+        $data['title'] = 'Nuevo producto';
+        $data['action'] = route('product.store');
+        $data['method'] = 'POST';
+        $data['product'] = null;
+
+        return view('web.product.form')
+        ->with('data', $data);
     }
 
     /**

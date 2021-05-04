@@ -11,6 +11,10 @@ use Tests\TestCase;
 
 class ProductControllerTest extends TestCase
 {
+    protected const PRODUCT_INDEX_ENDPOINT = 'product';
+    protected const PRODUCT_CREATE_ENDPOINT = 'product/create';
+    protected const PRODUCT_STORE_ENDPOINT = 'product';
+
     use RefreshDatabase, WithFaker;
 
     /**
@@ -24,7 +28,7 @@ class ProductControllerTest extends TestCase
             'role' => 'admin',
         ]);
         $this->actingAs($user)
-        ->get('/product')
+        ->get(self::PRODUCT_INDEX_ENDPOINT)
         ->assertSee('Listado de productos')
         ->assertStatus(Response::HTTP_OK);
     }
@@ -35,7 +39,7 @@ class ProductControllerTest extends TestCase
             'role' => 'admin',
         ]);
         $this->actingAs($user)
-        ->get('/product')
+        ->get(self::PRODUCT_INDEX_ENDPOINT)
         ->assertSee('Nuevo producto')
         ->assertStatus(Response::HTTP_OK);
     }
@@ -46,7 +50,7 @@ class ProductControllerTest extends TestCase
             'role' => 'admin',
         ]);
         $this->actingAs($user)
-        ->get('/product')
+        ->get(self::PRODUCT_INDEX_ENDPOINT)
         ->assertSee('No hay productos registrados')
         ->assertStatus(Response::HTTP_OK);
     }
@@ -59,13 +63,33 @@ class ProductControllerTest extends TestCase
         Product::factory(10)->create();
 
         $this->actingAs($user)
-        ->get('/product')
+        ->get(self::PRODUCT_INDEX_ENDPOINT)
         ->assertSee('Producto')
         ->assertSee('Precio')
         ->assertSee('Descuento')
         ->assertSee('Total de visitas')
         ->assertSee('Total de ordenes')
         ->assertSee('Eliminar')
+        ->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_mostrar_formulario_de_creacion_de_productos()
+    {
+        $user = User::factory()->create([
+            'role' => 'admin',
+        ]);
+        Product::factory(10)->create();
+
+        $this->actingAs($user)
+        ->get(self::PRODUCT_CREATE_ENDPOINT)
+        ->assertSee('Nuevo producto')
+        ->assertSee('Nombre')
+        ->assertSee('Precio')
+        ->assertSee('Descuento')
+        ->assertSee('Resumen')
+        ->assertSee('Descripción')
+        ->assertSee('Crear producto')
+
         ->assertStatus(Response::HTTP_OK);
     }
 }
