@@ -20,4 +20,26 @@ class Product extends Model
     {
         return 'slug';
     }
+
+
+    public function getImageAttribute()
+    {
+        $array = array('necklace','earings','rings');
+        $index = array_rand($array, 1);
+
+        return "{$this->image_url},{$array[$index]},".uniqid();
+
+    }
+
+    public function getRealPriceAttribute()
+    {
+        return 'S/. '.number_format($this->price) .'.00';
+
+    }
+
+    public function getRealDiscountAttribute()
+    {
+        return 'S/. '.number_format((1-$this->discount)*$this->price) .'.00';
+
+    }
 }
