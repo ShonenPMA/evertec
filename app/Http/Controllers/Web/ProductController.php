@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Dtos\Product\CreateDto;
+use App\Dtos\Product\UpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateRequest;
+use App\Http\Requests\Product\UpdateRequest;
 use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use App\UseCases\Product\CreateUseCase;
+use App\UseCases\Product\UpdateUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -65,37 +68,35 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return  \Illuminate\View\View
      */
-    public function edit(Product $product)
+    public function edit(Product $product) : View
     {
-        //
+        $data['title'] = "Editar producto {$product->name}";
+        $data['action'] = route('product.update', $product);
+        $data['method'] = 'PUT';
+        $data['product'] = $product;
+
+        return view('web.product.form')
+        ->with('data', $data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Product\UpdateRequest  $request
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateRequest $request, Product $product) : JsonResponse
     {
-        //
+        $dto = UpdateDto::fromRequest($request);
+        $useCase = new UpdateUseCase($product);
+
+        return $useCase->execute($dto);
     }
 
     /**

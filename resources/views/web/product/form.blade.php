@@ -12,31 +12,34 @@
                     name="name"
                     :required="true"
                     :autofocus="true"
+                    :value="$data['product'] ? $data['product']->name : ''"
                 />
 
                 <x-web.form.input
                     placeholder="Precio"
                     name="price"
                     :required="true"
+                    :value="$data['product'] ? $data['product']->price : ''"
 
                 />
                 <x-web.form.input
                     placeholder="Descuento (1-100)"
                     name="discount"
                     :required="true"
+                    :value="$data['product'] ? $data['product']->discount : ''"
 
                 />
 
                 <x-web.form.tiny
                     label="Resumen"
                     name="abstract"
-                    value=""
+                    :value="$data['product'] ? $data['product']->abstract : ''"
                 />
 
                 <x-web.form.tiny
                     label="Descripción"
                     name="description"
-                    value=""
+                    :value="$data['product'] ? $data['product']->description : ''"
                 />
                 
                 
