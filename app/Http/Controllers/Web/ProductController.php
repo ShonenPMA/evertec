@@ -121,6 +121,9 @@ class ProductController extends Controller
      */
     public function preview(Product $product)
     {
+        $product->total_views++;
+        $product->save();
+
         return view('web.product.preview')
         ->with('product', $product);
     }

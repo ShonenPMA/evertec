@@ -76,6 +76,9 @@ class CreateUseCase
         $this->order->request_id = $response['requestId'];
 
         $this->order->save();
+
+        $this->product->total_orders++;
+        $this->product->save();
         DB::commit();
     }
 
