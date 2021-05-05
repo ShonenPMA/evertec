@@ -31,8 +31,7 @@ Prueba Técnica
 
 6. Ejecutar migraciones y seeders
 
-> php artisan migrate
-> php artisan db:seed
+> php artisan migrate --seed
 7. Asignar permisos a las carpetas bootstrap/cache y storage
 
 > chmod -R 775 boostrap/cache
