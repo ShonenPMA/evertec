@@ -114,11 +114,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Show a preview of the product
-     * 
-     * @param  \App\Models\Product 
+     * Show a preview of the product.
+     *
+     * @param  \App\Models\Product $product
      * @return  \Illuminate\View\View
-     */ 
+     */
     public function preview(Product $product)
     {
         return view('web.product.preview')

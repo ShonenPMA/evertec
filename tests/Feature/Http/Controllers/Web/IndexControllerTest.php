@@ -11,6 +11,7 @@ use Tests\TestCase;
 class IndexControllerTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -21,17 +22,15 @@ class IndexControllerTest extends TestCase
         $this->withoutExceptionHandling();
         Product::factory(10)->create();
         $products = Product::orderBy('name', 'ASC')->get();
-        $maps = $products->map(function($item,$key){
+        $maps = $products->map(function ($item, $key) {
             return  $item->name;
         });
 
         $array = $maps->toArray();
 
-
         $this
             ->get('/')
             ->assertStatus(Response::HTTP_OK)
-            ->assertSeeTextInOrder($array)
-            ;
+            ->assertSeeTextInOrder($array);
     }
 }

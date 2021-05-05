@@ -25,36 +25,33 @@ class ProductControllerTest extends TestCase
     {
         return [
             'listado de productos' => ['GET', self::PRODUCT_INDEX_ENDPOINT],
-            'formulario de creación de productos' => ['GET',self::PRODUCT_CREATE_ENDPOINT],
-            'formulario de edición de productos' => ['EDIT',self::PRODUCT_EDIT_ENDPOINT],
+            'formulario de creación de productos' => ['GET', self::PRODUCT_CREATE_ENDPOINT],
+            'formulario de edición de productos' => ['EDIT', self::PRODUCT_EDIT_ENDPOINT],
             'crear productos' => ['POST', self::PRODUCT_STORE_ENDPOINT],
             'actualizar productos' => ['PUT', self::PRODUCT_UPDATE_ENDPOINT],
         ];
     }
-    
+
     /**
-        * @dataProvider endpointsProvider
-    */
+     * @dataProvider endpointsProvider
+     */
     public function test_obtener_forbidden_si_el_usuario_no_es_admin($method, $endpoint)
     {
         $user = User::factory()->create();
-        if($method == 'PUT')
-        {
+        if ($method == 'PUT') {
             $product = Product::factory()->create();
             $endpoint .= $product->slug;
         }
 
-        if($method == 'EDIT')
-        {
+        if ($method == 'EDIT') {
             $product = Product::factory()->create();
             $method = 'GET';
-            $endpoint  = str_replace("{product}", $product->slug, $endpoint);
+            $endpoint = str_replace('{product}', $product->slug, $endpoint);
         }
         $this->actingAs($user)
         ->json($method, $endpoint)
         ->assertStatus(Response::HTTP_FORBIDDEN);
     }
-
 
     public function test_mostrar_vista_de_listado_de_productos()
     {

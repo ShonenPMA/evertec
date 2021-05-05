@@ -21,40 +21,36 @@ class Product extends Model
         return 'slug';
     }
 
-
     public function getImageAttribute()
     {
-        $array = array('necklace','earings','rings');
+        $array = ['necklace', 'earings', 'rings'];
         $index = array_rand($array, 1);
 
         return "{$this->image_url},{$array[$index]},".uniqid();
-
     }
 
     public function getRealPriceAttribute()
     {
         return 'S/. '.number_format($this->price, 2);
-
     }
 
     public function getRealDiscountAttribute()
     {
-        return 'S/. '. $this->raw_discount ;
-
+        return 'S/. '.$this->raw_discount;
     }
 
     public function getRawDiscountAttribute()
     {
-        number_format((1-$this->discount)*$this->price, 2);
+        return number_format((1 - $this->discount) * $this->price, 2);
     }
 
     public function getTotalPriceAttribute()
     {
-        return $this->discount > 0 ? $this->real_discount : $this->real_price; 
+        return $this->discount > 0 ? $this->real_discount : $this->real_price;
     }
 
     public function getRawPriceAttribute()
     {
-        return $this->discount > 0 ? $this->raw_discount : $this->price; 
+        return $this->discount > 0 ? $this->raw_discount : $this->price;
     }
 }
