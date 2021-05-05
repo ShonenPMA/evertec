@@ -54,16 +54,13 @@ class CreateUseCase
                 config('checkout.URL'),
                 $this->getData()
             );
-            $json = $response->json();
+            $array = $response->json();
 
-            $this->order->request_id = $json['requestId'];
-
-            $this->order->save();
-            DB::commit();
+            $this->updateOrderData($array);
 
             return response()->json([
                 'message' => 'Orden de compra generada',
-                'redirect' => $json['processUrl'],
+                'redirect' => $array['processUrl'],
             ]);
         } catch (HttpException $exception) {
             DB::rollback();
@@ -72,6 +69,14 @@ class CreateUseCase
                'message' => 'El servicio no se encuentra disponible, intentalo mas tarde',
            ], Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    protected function updateOrderData(array $response)
+    {
+        $this->order->request_id = $response['requestId'];
+
+        $this->order->save();
+        DB::commit();
     }
 
     protected function getBuyer() : array

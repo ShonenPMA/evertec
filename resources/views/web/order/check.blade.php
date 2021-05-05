@@ -4,7 +4,14 @@
     <div class="w-full container flex justify-center items-center min-h-screen bg-gray-100 mx-auto">
         <div>
             <h1 class="text-4xl mt-4 text-center">Orden de compra generada</h1>
+            @if ($order->status == 'REJECTED')
+                <div class="my-4 text-2xl">
+                    Tu pago fue rechazado, para visualizar la tienda nuevamente haz clic
+                    <a class="font-bold text-red-600" href="{{ route('welcome') }}">aquí</a>
+                </div>
 
+
+            @endif
             <div class="container mx-auto my-4 shadow-md ">
                 <table class="w-full mt-4 table-auto">
                     <thead>
@@ -16,7 +23,7 @@
                     <tbody>
                         <tr>
                             <td class="py-2 px-4">Estado de la orden de compra: </td>
-                            <td class="py-2 px-4">{{ $order->status }}</td>
+                            <td class="py-2 px-4">{{ $order->real_status }}</td>
                         </tr>
                         <tr>
                             <td class="py-2 px-4">Código de rastreo: </td>

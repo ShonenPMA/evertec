@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
 use App\Models\Order;
 use App\Models\Product;
+use App\UseCases\Order\CheckUseCase;
 use App\UseCases\Order\CreateUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
@@ -46,8 +48,11 @@ class OrderController extends Controller
      * @param  \App\Models\Order $order
      * @return  \Illuminate\View\View
      */
-    public function check(Order $order)
+    public function check(Order $order) : View
     {
+        $useCase = new CheckUseCase($order);
+        $useCase->execute();
+
         return view('web.order.check')
         ->with('order', $order);
     }

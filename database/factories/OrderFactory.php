@@ -29,7 +29,7 @@ class OrderFactory extends Factory
             'product_name' => $this->faker->name,
             'total' => $this->faker->randomNumber(3),
             'request_id' => $this->faker->randomNumber(4),
-            'code' => uniqid('EVERTEC')
+            'code' => uniqid('EVERTEC'),
         ];
     }
 }
