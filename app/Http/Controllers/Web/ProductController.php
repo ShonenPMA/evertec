@@ -35,7 +35,7 @@ class ProductController extends Controller
     {
         $size = request()->get('size') ?? 5;
 
-        return new ProductCollection(Product::where('id', '<>', auth()->user()->id)->orderBy('name', 'ASC')->paginate($size));
+        return new ProductCollection(Product::orderBy('name', 'ASC')->paginate($size));
     }
 
     /**
@@ -114,14 +114,14 @@ class ProductController extends Controller
     }
 
     /**
-     * Show a preview of the product
-     * 
-     * @param  \App\Models\Product 
+     * Show a preview of the product.
+     *
+     * @param  \App\Models\Product $product
      * @return  \Illuminate\View\View
-     */ 
+     */
     public function preview(Product $product)
     {
-        return view('web.order.preview')
+        return view('web.product.preview')
         ->with('product', $product);
     }
 }

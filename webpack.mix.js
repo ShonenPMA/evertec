@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix
 .js('resources/js/httpWeb', 'public/js')
+.js('resources/js/orders', 'public/js')
 .js('resources/js/products', 'public/js')
 .js('resources/js/register', 'public/js')
 .js('resources/js/swal', 'public/js')
