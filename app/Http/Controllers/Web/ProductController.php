@@ -35,7 +35,7 @@ class ProductController extends Controller
     {
         $size = request()->get('size') ?? 5;
 
-        return new ProductCollection(Product::where('id', '<>', auth()->user()->id)->orderBy('name', 'ASC')->paginate($size));
+        return new ProductCollection(Product::orderBy('name', 'ASC')->paginate($size));
     }
 
     /**

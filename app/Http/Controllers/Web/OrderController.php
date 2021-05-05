@@ -6,6 +6,7 @@ use App\Dtos\Order\CreateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
 use App\Http\Requests\Order\SearchRequest;
+use App\Http\Resources\OrderCollection;
 use App\Models\Order;
 use App\Models\Product;
 use App\UseCases\Order\CheckUseCase;
@@ -60,20 +61,18 @@ class OrderController extends Controller
     }
 
     /**
-     * Search order by code
+     * Search order by code.
      * @param  \App\Http\Requests\Order\SearchRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-
-     public function search(SearchRequest $request)
-     {
+    public function search(SearchRequest $request)
+    {
         $order = Order::search($request->code)->first();
 
-        if($order)
-        {
+        if ($order) {
             return response()->json([
                 'message' => 'Orden encontrada',
-                'redirect' => route('order.check', $order->code)
+                'redirect' => route('order.check', $order->code),
             ]);
         }
 
@@ -81,5 +80,23 @@ class OrderController extends Controller
             'message' => 'No hay ninguna orden de compra con ese código',
 
         ], Response::HTTP_BAD_REQUEST);
-     }
+    }
+
+    /**
+     * Display a view with orders count.
+     *
+     * @return  \Illuminate\View\View
+     */
+    public function index()
+    {
+        return view('web.order.list')
+        ->with('total', Order::count());
+    }
+
+    public function list() : OrderCollection
+    {
+        $size = request()->get('size') ?? 5;
+
+        return new OrderCollection(Order::orderBy('created_at', 'DESC')->paginate($size));
+    }
 }

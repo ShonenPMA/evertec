@@ -2,7 +2,7 @@ import Tabulator from 'tabulator-tables'
 import 'tabulator-tables/dist/css/semantic-ui/tabulator_semantic-ui.min.css'
 const axios = require('axios');
 const Swal = require('sweetalert2');
-const myTabulators = document.querySelectorAll('#products');
+const myTabulators = document.querySelectorAll('#orders');
 const myTables = [];
 
 Array.prototype.forEach.call(myTabulators,function(myTabulator,index){
@@ -39,14 +39,13 @@ Array.prototype.forEach.call(myTabulators,function(myTabulator,index){
         paginationSize:5,
         paginationSizeSelector:[2,5, 10, 50, 100],
         columns: [
-            {title:"Nombre", field:"name", headerFilter: true},
-            {title:"Precio", field:"price", headerFilter: true},
-            {title:"Descuento", field:"discount", headerFilter: true},
-            {title:"Total de visitas", field:"total_views", headerFilter: true},
-            {title:"Total de ordenes", field:"total_orders", headerFilter: true},
-            {title:"Editar", field:"buttonEdit", formatter:"html", headerFilter: false},
-            {title:"Eliminar", field:"buttonDelete", formatter:"html", headerFilter: false},
+            {title:"Producto", field:"product", headerFilter: true},
+            {title:"Comprador", field:"buyer", headerFilter: true},
+            {title:"Estado", field:"state", headerFilter: true},
+            {title:"Total", field:"total", headerFilter: true},
+            {title:"Ver detalle", field:"detail", formatter:"html", headerFilter: false},
         ]
+
     })
 })
 

@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Web;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
@@ -121,5 +122,59 @@ class OrderControllerTest extends TestCase
         ->assertSee('Correo del comprador')
         ->assertSee('Celular del comprador')
         ->assertSee('RECHAZADO');
+    }
+
+    public function test_solo_admin_puede_ver_listado_de_ordenes()
+    {
+        $user = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->json('GET', 'order')
+            ->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_prohibir_ver_listado_de_ordenes_si_no_es_admin()
+    {
+        $user = User::factory()->create();
+
+        $this
+            ->actingAs($user)
+            ->json('GET', 'order')
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    public function test_mensaje_cuando_no_hay_ordenes_generadas_en_la_vista_de_listado()
+    {
+        $user = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->json('GET', 'order')
+            ->assertStatus(Response::HTTP_OK)
+            ->assertSee('No hay ordenes generadas');
+    }
+
+    public function test_tabla_de_ordenes_generadas_en_la_vista_de_listado()
+    {
+        $user = User::factory()->create([
+            'role' => 'admin',
+        ]);
+
+        Order::factory(10)->create();
+
+        $this
+            ->actingAs($user)
+            ->json('GET', 'order')
+            ->assertStatus(Response::HTTP_OK)
+            ->assertSee('Producto')
+            ->assertSee('Comprador')
+            ->assertSee('Estado')
+            ->assertSee('Total')
+            ->assertSee('Ver detalle');
     }
 }
