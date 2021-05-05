@@ -25,6 +25,12 @@ Prueba Técnica
 
 > nano .env
 
+> Asignar las variables de entorno:
+  * CHECKOUT_URL
+  * CHECKOUT_LOGIN
+  * CHECKOUT_SECRETKEY
+  * CHECKOUT_NONCE
+
 5. Generar la llave de la aplicación:
 
 > php artisan key:generate
