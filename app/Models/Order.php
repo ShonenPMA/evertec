@@ -26,4 +26,9 @@ class Order extends Model
 
         return $state;
     }
+
+    public function scopeSearch($query, $code)
+    {
+        return $query->where('code', $code);
+    }
 }

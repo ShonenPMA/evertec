@@ -23,6 +23,8 @@ Route::get('/order/{product:slug}', [OrderController::class, 'preview'])->name('
 Route::post('/order/{product:slug}', [OrderController::class, 'generate'])->name('order.generate');
 Route::get('/order/check/{order:code}', [OrderController::class, 'check'])->name('order.check');
 
+Route::post('searchOrder', [OrderController::class, 'search'])->name('order.search');
+
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['can:list-products'])->group(function () {
         Route::get('product/list', [ProductController::class, 'list']);

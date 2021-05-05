@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Web;
 use App\Dtos\Order\CreateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
+use App\Http\Requests\Order\SearchRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\UseCases\Order\CheckUseCase;
 use App\UseCases\Order\CreateUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -56,4 +58,28 @@ class OrderController extends Controller
         return view('web.order.check')
         ->with('order', $order);
     }
+
+    /**
+     * Search order by code
+     * @param  \App\Http\Requests\Order\SearchRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+     public function search(SearchRequest $request)
+     {
+        $order = Order::search($request->code)->first();
+
+        if($order)
+        {
+            return response()->json([
+                'message' => 'Orden encontrada',
+                'redirect' => route('order.check', $order->code)
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'No hay ninguna orden de compra con ese código',
+
+        ], Response::HTTP_BAD_REQUEST);
+     }
 }
